@@ -5,6 +5,7 @@
 package evidencija;
 
 import evidencija.util.HibernateUtil;
+import evidencija.util.PocetniInesert;
 import evidencija.view.SplashScreen;
 import org.hibernate.Session;
 
@@ -23,6 +24,7 @@ public class Start {
     public static void main(String[] args) {
         //new Start();
         new SplashScreen().setVisible(true);
+        //PocetniInesert.unosOperatera();
 
     }
 
