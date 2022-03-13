@@ -4,15 +4,18 @@
  */
 package evidencija.model;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author jbalog8
  */
 @Entity
-public class Zaposlenik extends Osoba{
+public class Zaposlenik extends Osoba {
+
     private String brKartice;
     @ManyToOne
     private Odjel odjel;
@@ -32,10 +35,5 @@ public class Zaposlenik extends Osoba{
     public void setOdjel(Odjel odjel) {
         this.odjel = odjel;
     }
-    
-    
-    
-        
-        
-    
+
 }
