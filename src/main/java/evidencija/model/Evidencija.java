@@ -5,8 +5,11 @@
 package evidencija.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import evidencija.model.Zaposlenik;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -14,13 +17,16 @@ import javax.persistence.OneToMany;
  * @author jbalog8
  */
 @Entity
-public class Evidencija extends Entitet{
-        private Date datum;
-	private boolean prijava;
-        @ManyToOne
-	private Zaposlenik zaposlenik;
-        @ManyToOne
-	private VrstaRada vrstaRada;
+public class Evidencija extends Entitet {
+
+    private Date datum;
+    private boolean prijava;
+
+    @ManyToMany
+    private List<Zaposlenik> zaposlenik;
+
+    @ManyToOne
+    private VrstaRada vrstaRada;
 
     public Date getDatum() {
         return datum;
@@ -38,14 +44,6 @@ public class Evidencija extends Entitet{
         this.prijava = prijava;
     }
 
-    public Zaposlenik getZaposlenik() {
-        return zaposlenik;
-    }
-
-    public void setZaposlenik(Zaposlenik zaposlenik) {
-        this.zaposlenik = zaposlenik;
-    }
-
     public VrstaRada getVrstaRada() {
         return vrstaRada;
     }
@@ -53,6 +51,14 @@ public class Evidencija extends Entitet{
     public void setVrstaRada(VrstaRada vrstaRada) {
         this.vrstaRada = vrstaRada;
     }
-        
+
+    public List<Zaposlenik> getZaposlenik() {
+        return zaposlenik;
+    }
+
+    public void setZaposlenik(List<Zaposlenik> zaposlenik) {
+        this.zaposlenik = zaposlenik;
+    }
     
+
 }
