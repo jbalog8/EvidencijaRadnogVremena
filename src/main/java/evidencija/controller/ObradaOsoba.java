@@ -8,6 +8,8 @@ import evidencija.model.Osoba;
 import evidencija.util.EvidencijaException;
 import evidencija.util.OibValidation;
 import java.util.List;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /**
  *
@@ -41,6 +43,12 @@ public abstract class ObradaOsoba<T extends Osoba> extends Obrada<T>{
     }
 
     private void kontrolaEmail() throws EvidencijaException{
+         try {
+             InternetAddress emailAddr = new InternetAddress(entitet.getEmail());
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            throw new EvidencijaException("Email nije formalno ispravan");
+        }
         
        
     }
