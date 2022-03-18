@@ -5,6 +5,9 @@
 package evidencija.util;
 
 import evidencija.model.Operater;
+import evidencija.model.Zaposlenik;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Session;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -27,5 +30,9 @@ public class PocetniInesert {
         session.getTransaction().commit();
         
     }
+    
+    
+    
+    
     
 }
