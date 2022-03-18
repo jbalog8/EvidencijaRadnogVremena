@@ -21,27 +21,21 @@ public class ObradaEvidencija extends Obrada<Evidencija> {
 
     @Override
     protected void kontrolaCreate() throws EvidencijaException {
-        kontrolaDatum();
-
+        
     }
 
     @Override
     protected void kontrolaUpdate() throws EvidencijaException {
-        kontrolaDatum();
+      
     }
 
     @Override
     protected void kontrolaDelete() throws EvidencijaException {
-        if (entitet.getZaposlenik() != null && entitet.getZaposlenik().size() > 0) {
+        if (entitet.getZaposlenik() != null) {
             throw new EvidencijaException("Evidenciju ne mozes obrisati zato sto pripada zaposleniku");
         }
     }
 
-    private void kontrolaDatum() throws EvidencijaException {
-
-        if (entitet.getDatum() == null) {
-            throw new EvidencijaException("Datum obavezan");
-        }
-    }
+    
 
 }
