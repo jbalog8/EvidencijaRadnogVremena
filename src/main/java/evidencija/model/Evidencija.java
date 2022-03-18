@@ -5,12 +5,9 @@
 package evidencija.model;
 
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import evidencija.model.Zaposlenik;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.Column;
 
 /**
  *
@@ -19,30 +16,33 @@ import javax.persistence.OneToMany;
 @Entity
 public class Evidencija extends Entitet {
 
-    private Date datum;
-    private boolean prijava;
+    @Column(nullable = false)
+    private Date datumPocetak;
+    private Date datumKraj;
 
-    @ManyToMany
-    private List<Zaposlenik> zaposlenik;
+    @ManyToOne
+    private Zaposlenik zaposlenik;
 
     @ManyToOne
     private VrstaRada vrstaRada;
 
-    public Date getDatum() {
-        return datum;
+    public Date getDatumPocetak() {
+        return datumPocetak;
     }
 
-    public void setDatum(Date datum) {
-        this.datum = datum;
+    public void setDatumPocetak(Date datumPocetak) {
+        this.datumPocetak = datumPocetak;
     }
 
-    public boolean isPrijava() {
-        return prijava;
+    public Date getDatumKraj() {
+        return datumKraj;
     }
 
-    public void setPrijava(boolean prijava) {
-        this.prijava = prijava;
+    public void setDatumKraj(Date datumKraj) {
+        this.datumKraj = datumKraj;
     }
+
+   
 
     public VrstaRada getVrstaRada() {
         return vrstaRada;
@@ -52,13 +52,15 @@ public class Evidencija extends Entitet {
         this.vrstaRada = vrstaRada;
     }
 
-    public List<Zaposlenik> getZaposlenik() {
+    public Zaposlenik getZaposlenik() {
         return zaposlenik;
     }
 
-    public void setZaposlenik(List<Zaposlenik> zaposlenik) {
+    public void setZaposlenik(Zaposlenik zaposlenik) {
         this.zaposlenik = zaposlenik;
     }
+
+   
     
 
 }
