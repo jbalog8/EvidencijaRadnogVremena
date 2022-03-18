@@ -18,7 +18,7 @@ import us.codecraft.xsoup.Xsoup;
  */
 public class EvidencijaUtil {
     public static Operater operater;
-    public static final String NAZIV_APP="Edunova app";
+    public static final String NAZIV_APP="EVIDENCIJA app";
     
     public static String getNaslov(String naslov){
         if(EvidencijaUtil.operater==null){
