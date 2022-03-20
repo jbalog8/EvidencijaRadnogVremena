@@ -22,7 +22,7 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
     @Override
     protected void kontrolaCreate() throws EvidencijaException {
         super.kontrolaCreate();
-        kontrolaBrKartice();
+       
     }
 
     private void kontrolaBrKartice() throws EvidencijaException{
