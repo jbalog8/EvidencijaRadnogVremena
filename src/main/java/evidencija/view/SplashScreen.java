@@ -71,7 +71,7 @@ public class SplashScreen extends javax.swing.JFrame {
                     }
                 }
 
-                new Autorizacija().setVisible(true);
+                new MiniIzbornik().setVisible(true);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(getRootPane(), "Problem s povezivanje na bazu");
