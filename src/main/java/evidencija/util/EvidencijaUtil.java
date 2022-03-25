@@ -5,6 +5,7 @@
 package evidencija.util;
 
 import evidencija.model.Operater;
+import evidencija.model.Zaposlenik;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -48,6 +49,15 @@ public class EvidencijaUtil {
         } catch (Exception e) {
         }
         return "";
+    }
+    
+    public static String generirajKarticu(){
+        Zaposlenik z = new Zaposlenik();
+        int i= 0;
+        String kartica = "00000000000000" + ++i;
+        kartica = kartica.substring(kartica.length()-13);
+        
+        return kartica;
     }
     
 }
