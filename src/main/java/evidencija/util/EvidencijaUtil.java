@@ -9,6 +9,7 @@ import evidencija.model.Zaposlenik;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Random;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import us.codecraft.xsoup.Xsoup;
@@ -52,9 +53,10 @@ public class EvidencijaUtil {
     }
     
     public static String generirajKarticu(){
-        Zaposlenik z = new Zaposlenik();
-        int i= 0;
-        String kartica = "00000000000000" + ++i;
+       int broj = ((int)(Math.random()*100)+1);
+       String kartica = "";
+       
+        kartica = "0000000000000" + broj;
         kartica = kartica.substring(kartica.length()-13);
         
         return kartica;
