@@ -22,6 +22,7 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
     @Override
     protected void kontrolaCreate() throws EvidencijaException {
         super.kontrolaCreate();
+        kontrolaBrKartice();
        
     }
 
@@ -29,15 +30,23 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
         if(entitet.getBrKartice() == null && entitet.getBrKartice().length() < 13){
             throw new EvidencijaException("Broj kartice ne moze biti 0 i ne moze biti manje od 13 znamaneki");
         }
+        List<Zaposlenik> lista = session.createQuery("from Zaposlenik z " + "where z.brKartice=:brKartice")
+                .setParameter("brKartice", entitet.getBrKartice()).list();
+        
+        if(lista!= null && lista.size()>0){
+            throw new EvidencijaException("Broj kartice je već u sustavu, dodjeljen " + lista.get(0).getPrezime());
+        }
     }
 
     @Override
     protected void kontrolaDelete() throws EvidencijaException {
         super.kontrolaDelete();
-        
+        /*
         if(entitet.getOdjel()!= null){
             throw new EvidencijaException("Zaposlenik se nalazi na jednom odjelu");
         }
+*/
+        
     }
     
     
