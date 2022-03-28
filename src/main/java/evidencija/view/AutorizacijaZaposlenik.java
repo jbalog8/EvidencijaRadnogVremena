@@ -7,6 +7,9 @@ package evidencija.view;
 import evidencija.controller.ObradaZaposlenik;
 import evidencija.model.Zaposlenik;
 import evidencija.util.HibernateUtil;
+import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import org.hibernate.Session;
 
 /**
@@ -15,29 +18,54 @@ import org.hibernate.Session;
  */
 public class AutorizacijaZaposlenik extends javax.swing.JFrame {
 
-    private ObradaZaposlenik obradaZaposlenik;
+    private ObradaZaposlenik obrada;
+
     /**
      * Creates new form AutorizacijaZaposlenik
      */
     public AutorizacijaZaposlenik() {
         initComponents();
-         postavke();
-         
-         
-         
+
+        obrada = new ObradaZaposlenik();
+
+        txtBrojKartice.getText();
+
+        txtBrojKartice.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                promjenaBarKod();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                promjenaBarKod();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                promjenaBarKod();
+            }
+        });
     }
-     private void postavke() {
-         obradaZaposlenik = new ObradaZaposlenik();
-         txtBrojKartice.setText(txtBrojKartice.getText());
-        
-    }
-     
-     private void autorizacija() {
-        if (txtBrojKartice.getText().trim().isEmpty()) {
-            txtBrojKartice.requestFocus();
+
+    private void promjenaBarKod() {
+        if (txtBrojKartice.getText().length() != 13) {
             return;
         }
-     }
+        new ZaposlenikovProzor().setVisible(true);
+        Zaposlenik z = obrada.getZaposlenik(txtBrojKartice.getText());
+
+        Runnable doHighlight = new Runnable() {
+            @Override
+            public void run() {
+                txtBrojKartice.setText("");
+            }
+        };
+        SwingUtilities.invokeLater(doHighlight);
+        System.out.println(z.getIme() + z.getPrezime());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,25 +133,19 @@ public class AutorizacijaZaposlenik extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPRIJAVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPRIJAVAActionPerformed
-        autorizacija();
-        
-        new ZaposlenikovProzor().setVisible(true);
-       
-        
+
+
     }//GEN-LAST:event_btnPRIJAVAActionPerformed
 
     /**
      * @param args the command line arguments
      */
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPRIJAVA;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtBrojKartice;
     // End of variables declaration//GEN-END:variables
-
-    
-  
 
 }
