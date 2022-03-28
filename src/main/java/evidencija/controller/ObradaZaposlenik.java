@@ -18,6 +18,16 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
     public List<Zaposlenik> read() {
         return session.createQuery("from Zaposlenik").list();
     }
+    
+    public Zaposlenik getZaposlenik(String brKartice){
+        try {
+            return (Zaposlenik) session.createQuery("from Zaposlenik where brKartice=:brKartice")
+                    .setParameter("brKartice", brKartice).getSingleResult();
+            
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @Override
     protected void kontrolaCreate() throws EvidencijaException {
