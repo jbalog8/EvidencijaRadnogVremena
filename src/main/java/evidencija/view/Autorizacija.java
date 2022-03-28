@@ -7,6 +7,7 @@ package evidencija.view;
 import evidencija.controller.ObradaOperater;
 import evidencija.model.Operater;
 import evidencija.util.EvidencijaUtil;
+import evidencija.util.PocetniInesert;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.JOptionPane;
@@ -146,9 +147,10 @@ public class Autorizacija extends javax.swing.JFrame {
         Operater operater = obradaOperater.autoriziraj(txtEmail.getText(), new String(txtLozinka.getPassword()));
 
         if (operater == null) {
-            JOptionPane.showMessageDialog(getRootPane(), "Neispravna kombinacija email i lozinka");
+            PocetniInesert.unosOperatera();
+            
+        }else
             return;
-        }
     }
 
 }
