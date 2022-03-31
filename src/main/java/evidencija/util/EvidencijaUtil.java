@@ -56,7 +56,7 @@ public class EvidencijaUtil {
        int broj = ((int)(Math.random()*100)+1);
        String kartica = "";
        
-        kartica = "0000000000000" + broj;
+        kartica = "1000000000000" + broj;
         kartica = kartica.substring(kartica.length()-13);
         
         return kartica;
