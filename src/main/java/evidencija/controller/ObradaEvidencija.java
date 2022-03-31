@@ -5,7 +5,10 @@
 package evidencija.controller;
 
 import evidencija.model.Evidencija;
+import evidencija.model.Zaposlenik;
 import evidencija.util.EvidencijaException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,10 +35,26 @@ public class ObradaEvidencija extends Obrada<Evidencija> {
     @Override
     protected void kontrolaDelete() throws EvidencijaException {
         if (entitet.getZaposlenik() != null) {
-            throw new EvidencijaException("Evidenciju ne mozes obrisati zato sto pripada zaposleniku");
+            throw new EvidencijaException("Evidenciju ne mozeš obrisati zato što pripada zaposleniku");
         }
     }
 
-    
+    public Zaposlenik getZaposlenik(String ime){
+        if(entitet.getZaposlenik() == null){
+        try {
+            return (Zaposlenik) session.createQuery("from Zaposlenik where ime=:ime")
+                    .setParameter("ime", ime).getSingleResult();
+            
+        } catch (Exception e) {
+            
+        
+        
+    }
 
+        }
+    
+return null;
 }
+    
+}
+
