@@ -314,6 +314,9 @@ public class ZaposlenikProzor extends javax.swing.JFrame {
        if(evt.getClickCount()==2){
             txtBrKartice.setText(EvidencijaUtil.generirajKarticu());
        }
+       if(evt.getClickCount()>2){
+           txtBrKartice.setText(EvidencijaUtil.generirajKarticu());
+       }
     }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
