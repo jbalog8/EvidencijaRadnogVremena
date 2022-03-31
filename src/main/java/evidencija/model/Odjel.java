@@ -4,7 +4,9 @@
  */
 package evidencija.model;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -14,6 +16,17 @@ import javax.persistence.Entity;
 public class Odjel extends Entitet{
    
     private String naziv;
+    
+    @OneToMany(mappedBy = "odjel")
+    private List<Zaposlenik> zaposlenici;
+
+    public List<Zaposlenik> getZaposlenici() {
+        return zaposlenici;
+    }
+
+    public void setZaposlenici(List<Zaposlenik> zaposlenici) {
+        this.zaposlenici = zaposlenici;
+    }
 
     public String getNaziv() {
         return naziv;
