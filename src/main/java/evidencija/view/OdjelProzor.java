@@ -5,9 +5,12 @@
 package evidencija.view;
 
 import evidencija.controller.ObradaOdjel;
+import evidencija.controller.ObradaZaposlenik;
 import evidencija.model.Odjel;
+import evidencija.model.Zaposlenik;
 import evidencija.util.EvidencijaException;
 import evidencija.util.EvidencijaUtil;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -19,6 +22,7 @@ import javax.swing.JOptionPane;
 public class OdjelProzor extends javax.swing.JFrame {
 
     private ObradaOdjel obrada;
+    private ObradaZaposlenik obradaZaposlenik;
 
     /**
      * Creates new form OdjelProzor
@@ -26,8 +30,10 @@ public class OdjelProzor extends javax.swing.JFrame {
     public OdjelProzor() {
         initComponents();
         obrada = new ObradaOdjel();
+        obradaZaposlenik = new ObradaZaposlenik();
         setTitle(EvidencijaUtil.getNaslov("Odjel"));
         ucitaj();
+        lstZaposleniciNaOdjelima.setCellRenderer(new PrikazOsoba());
     }
 
     /**
@@ -39,22 +45,17 @@ public class OdjelProzor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lstEntiteti = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         txtNaziv = new javax.swing.JTextField();
         btnKreiraj = new javax.swing.JButton();
         btnPromjeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstEntiteti = new javax.swing.JList<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstZaposleniciNaOdjelima = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        lstEntiteti.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstEntitetiValueChanged(evt);
-            }
-        });
-        jScrollPane1.setViewportView(lstEntiteti);
 
         jLabel1.setText("Naziv");
 
@@ -79,43 +80,55 @@ public class OdjelProzor extends javax.swing.JFrame {
             }
         });
 
+        lstEntiteti.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstEntitetiValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(lstEntiteti);
+
+        jScrollPane1.setViewportView(lstZaposleniciNaOdjelima);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
                         .addComponent(btnKreiraj)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPromjeni)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnObrisi)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(btnObrisi))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(168, 168, 168)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnKreiraj)
                             .addComponent(btnPromjeni)
                             .addComponent(btnObrisi)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -133,16 +146,6 @@ public class OdjelProzor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
         }
     }//GEN-LAST:event_btnKreirajActionPerformed
-
-    private void lstEntitetiValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEntitetiValueChanged
-        if (evt.getValueIsAdjusting() || lstEntiteti.getSelectedValue() == null) {
-            return;
-        }
-        obrada.setEntitet(lstEntiteti.getSelectedValue());
-        var o = obrada.getEntitet();
-        txtNaziv.setText(o.getNaziv());
-        
-    }//GEN-LAST:event_lstEntitetiValueChanged
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
         if (obrada.getEntitet() == null) {
@@ -183,6 +186,23 @@ public class OdjelProzor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
 
+    private void lstEntitetiValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEntitetiValueChanged
+        if (evt.getValueIsAdjusting() || lstEntiteti.getSelectedValue() == null) {
+            return;
+        }
+        obrada.setEntitet(lstEntiteti.getSelectedValue());
+        var o = obrada.getEntitet();
+        txtNaziv.setText(o.getNaziv());
+        
+        DefaultListModel<Zaposlenik> z = new DefaultListModel<>();
+       
+        if(o.getZaposlenici()!= null){
+            Collections.sort(o.getZaposlenici(),new ZaposlenikComparator());
+            z.addAll(o.getZaposlenici());
+         }
+        lstZaposleniciNaOdjelima.setModel(z);
+    }//GEN-LAST:event_lstEntitetiValueChanged
+
     /**
          * @param args the command line arguments
          */
@@ -192,7 +212,9 @@ public class OdjelProzor extends javax.swing.JFrame {
     private javax.swing.JButton btnPromjeni;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<Odjel> lstEntiteti;
+    private javax.swing.JList<Zaposlenik> lstZaposleniciNaOdjelima;
     private javax.swing.JTextField txtNaziv;
     // End of variables declaration//GEN-END:variables
 
@@ -210,4 +232,6 @@ public class OdjelProzor extends javax.swing.JFrame {
      var o = obrada.getEntitet();
      o.setNaziv(txtNaziv.getText());
     }
+    
+    
 }
