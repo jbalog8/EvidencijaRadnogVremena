@@ -4,10 +4,14 @@
  */
 package evidencija.view;
 
+import evidencija.controller.ObradaEvidencija;
+import evidencija.controller.ObradaOdjel;
+import evidencija.controller.ObradaOsoba;
 import evidencija.controller.ObradaZaposlenik;
-import evidencija.model.Osoba;
 import evidencija.model.Zaposlenik;
-import javax.swing.JLabel;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -15,7 +19,8 @@ import javax.swing.JLabel;
  */
 public class ZaposlenikovProzor extends javax.swing.JFrame {
 
-    private ObradaZaposlenik oz;
+    private ObradaEvidencija obrada;
+    private ObradaZaposlenik obradaZaposlenik;
 
     /**
      * Creates new form ZaposlenikovProzor
@@ -23,9 +28,40 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
     public ZaposlenikovProzor() {
 
         initComponents();
-        oz = new ObradaZaposlenik();
+        obradaZaposlenik = new ObradaZaposlenik();
+        obrada = new ObradaEvidencija();
+        ucitaj();
+        
 
-        zaposlenik(lblImePrezime);
+    }
+
+    public void ucitaj() {
+        
+       
+        DefaultListModel<Zaposlenik> m = new DefaultListModel<>();
+        List<Zaposlenik> entiteti = obradaZaposlenik.read();
+        
+        
+       
+      
+        for(Zaposlenik z : entiteti){
+            if(!postojiZaposlenik(m, z)){
+                 m.addElement(z);
+            }
+            txtImePrezime.getText();
+            
+        }
+       
+        
+    }
+    
+    private boolean postojiZaposlenik(DefaultListModel<Zaposlenik>z,Zaposlenik p){
+        for(int i = 0;i<z.size();i++){
+            if(z.get(i).getSifra().equals(p.getSifra())){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -40,20 +76,22 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnKrajRada = new javax.swing.JButton();
         btnPocetakRada = new javax.swing.JButton();
-        lblImePrezime = new javax.swing.JLabel();
+        txtImePrezime = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("DOBRO DOŠAO");
+        jLabel1.setText("DOBRO DOŠAO/LA");
 
         btnKrajRada.setText("KRAJ RADA");
 
         btnPocetakRada.setText("POČETAK RADA");
-
-        lblImePrezime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblImePrezime.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnPocetakRada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPocetakRadaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,14 +100,14 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
+                        .addGap(90, 90, 90)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnPocetakRada, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                             .addComponent(btnKrajRada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblImePrezime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtImePrezime))))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -77,9 +115,9 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblImePrezime, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtImePrezime, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPocetakRada, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(btnKrajRada, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -90,18 +128,16 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPocetakRadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPocetakRadaActionPerformed
+        
+    }//GEN-LAST:event_btnPocetakRadaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKrajRada;
     private javax.swing.JButton btnPocetakRada;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblImePrezime;
+    private javax.swing.JTextField txtImePrezime;
     // End of variables declaration//GEN-END:variables
-
-    private void zaposlenik(JLabel zaposlenik) {
-
-      
-
-    }
 
 }
