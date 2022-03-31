@@ -73,11 +73,16 @@
             <version>0.4</version>
         </dependency>
         
-         <!-- https://mvnrepository.com/artifact/com.github.lgooddatepicker/LGoodDatePicker -->
+        <!-- https://mvnrepository.com/artifact/com.github.lgooddatepicker/LGoodDatePicker -->
         <dependency>
             <groupId>com.github.lgooddatepicker</groupId>
             <artifactId>LGoodDatePicker</artifactId>
             <version>11.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.25.0-GA</version>
         </dependency>
         
     </dependencies>
