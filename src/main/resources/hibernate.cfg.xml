@@ -5,7 +5,7 @@
      
             <!--
 Potrebno je ručno kreirati bazu
-    create database evidencijahib character set utf8mb4;
+    create database evidencijahib character set utf8mb4 COLLATE utf8mb4_croatian_ci;
  -->
         
 <hibernate-configuration>
