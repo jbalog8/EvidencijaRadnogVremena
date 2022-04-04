@@ -19,8 +19,8 @@ import javax.swing.DefaultListModel;
  */
 public class ZaposlenikovProzor extends javax.swing.JFrame {
 
-    private ObradaEvidencija obrada;
-    private ObradaZaposlenik obradaZaposlenik;
+   
+    private ObradaZaposlenik obrada;
 
     /**
      * Creates new form ZaposlenikovProzor
@@ -28,8 +28,8 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
     public ZaposlenikovProzor() {
 
         initComponents();
-        obradaZaposlenik = new ObradaZaposlenik();
-        obrada = new ObradaEvidencija();
+        obrada = new ObradaZaposlenik();
+        
         ucitaj();
         
 
@@ -39,13 +39,14 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
         
        
         DefaultListModel<Zaposlenik> m = new DefaultListModel<>();
-        List<Zaposlenik> entiteti = obradaZaposlenik.read();
+        List<Zaposlenik> entiteti = obrada.read();
         
-        
+ 
        
       
         for(Zaposlenik z : entiteti){
             if(!postojiZaposlenik(m, z)){
+                txtImePrezime.setText(z.getIme() + "  " +  z.getPrezime());
                  m.addElement(z);
             }
             txtImePrezime.getText();
@@ -92,6 +93,9 @@ public class ZaposlenikovProzor extends javax.swing.JFrame {
                 btnPocetakRadaActionPerformed(evt);
             }
         });
+
+        txtImePrezime.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        txtImePrezime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
