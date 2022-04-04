@@ -6,6 +6,7 @@ package evidencija.controller;
 
 import evidencija.model.Odjel;
 import evidencija.util.EvidencijaException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,5 +45,10 @@ public class ObradaOdjel extends Obrada<Odjel>{
             throw new EvidencijaException("Naziv odjela ne smije biti duži od 50 znakova");
         }
     }
+
+   
+        
+    
+    
     
 }
