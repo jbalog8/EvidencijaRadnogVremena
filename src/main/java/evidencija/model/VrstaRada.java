@@ -21,6 +21,11 @@ public class VrstaRada extends Entitet{
     public void setNaziv(String naziv) {
         this.nazivRada = naziv;
     }
+
+    @Override
+    public String toString() {
+        return nazivRada;
+    }
     
     
 }
