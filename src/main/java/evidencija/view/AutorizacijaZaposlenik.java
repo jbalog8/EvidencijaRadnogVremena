@@ -4,9 +4,14 @@
  */
 package evidencija.view;
 
+import evidencija.controller.ObradaEvidencija;
 import evidencija.controller.ObradaZaposlenik;
+import evidencija.model.Evidencija;
 import evidencija.model.Zaposlenik;
 import evidencija.util.HibernateUtil;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -19,6 +24,7 @@ import org.hibernate.Session;
 public class AutorizacijaZaposlenik extends javax.swing.JFrame {
 
     private ObradaZaposlenik obrada;
+    private ObradaEvidencija obradaEvidencija;
 
     /**
      * Creates new form AutorizacijaZaposlenik
@@ -27,6 +33,7 @@ public class AutorizacijaZaposlenik extends javax.swing.JFrame {
         initComponents();
 
         obrada = new ObradaZaposlenik();
+        obradaEvidencija = new ObradaEvidencija();
 
         txtBrojKartice.getText();
 
@@ -53,6 +60,47 @@ public class AutorizacijaZaposlenik extends javax.swing.JFrame {
         if (txtBrojKartice.getText().length() != 13) {
             return;
         }
+         Zaposlenik zaposlenik = obrada.getZaposlenik(txtBrojKartice.getText());
+        if(zaposlenik==null){
+            JOptionPane.showMessageDialog(null, "Ne postoji zaposlenik");
+            return;
+        }
+       
+        List<Evidencija> evidencije = obrada.getEvidencije(zaposlenik);
+       
+       
+        if(evidencije==null || evidencije.size()==0){
+            Evidencija e = new Evidencija();
+            e.setZaposlenik(zaposlenik);
+            e.setDatumPocetak(new Date());
+            obradaEvidencija.setEntitet(e);
+            try {
+               
+                obradaEvidencija.create();
+                JOptionPane.showMessageDialog(null, "Uspješno ste se prijavili " + e.getZaposlenik());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "greška dodavanje novi");
+                return;
+            }
+        }else{
+            var evidencija = evidencije.get(0);
+            // da li je prošlo više od 8 sati. Ako je prošlo više od 8 sati tada
+            // staru evidenciju zatvore nakon 8 sati od početka stare
+            //i napravi novu
+            evidencija.setDatumKraj(new Date());
+           
+            obradaEvidencija.setEntitet(evidencija);
+            try {
+               
+                obradaEvidencija.update();
+                JOptionPane.showMessageDialog(null, "Uspješno stese odjavili " + evidencija.getZaposlenik());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "nije dobro");
+                return;
+            }
+        }
+        
+        /*
         new ZaposlenikovProzor().setVisible(true);
         Zaposlenik z = obrada.getZaposlenik(txtBrojKartice.getText());
 
@@ -64,7 +112,9 @@ public class AutorizacijaZaposlenik extends javax.swing.JFrame {
         };
         SwingUtilities.invokeLater(doHighlight);
         System.out.println(z.getIme() + z.getPrezime());
+        */
     }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
