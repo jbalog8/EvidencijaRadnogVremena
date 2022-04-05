@@ -8,9 +8,6 @@ import evidencija.controller.ObradaEvidencija;
 import evidencija.controller.ObradaZaposlenik;
 import evidencija.model.Zaposlenik;
 import evidencija.util.EvidencijaUtil;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
@@ -20,20 +17,24 @@ import javax.swing.DefaultListModel;
  */
 public class EvidencijaProzor extends javax.swing.JFrame {
 
-    
     private ObradaZaposlenik obrada;
+    private ObradaEvidencija obradaEvidencija;
 
     /**
      * Creates new form EvidencijaProzor
      */
     public EvidencijaProzor() {
         initComponents();
-        
-        
+
         setTitle(EvidencijaUtil.getNaslov("Evidencija"));
         lstZaposleniciUPoduzecu.setCellRenderer(new PrikazOsoba());
         obrada = new ObradaZaposlenik();
+        obradaEvidencija = new ObradaEvidencija();
         ucitaj();
+        TablicaModel m = new TablicaModel(new ObradaEvidencija().read());
+        jTable2.setModel(m);
+        
+
     }
 
     /**
@@ -48,8 +49,9 @@ public class EvidencijaProzor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstZaposleniciUPoduzecu = new javax.swing.JList<>();
-        jLabel3 = new javax.swing.JLabel();
-        cmbMjeseci = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -58,14 +60,26 @@ public class EvidencijaProzor extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstZaposleniciUPoduzecu);
 
-        jLabel3.setText("Mjeseci");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Evidencija Zaposlenika");
 
-        cmbMjeseci.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj\t", "Srpanj", "Kolovoz", "Rujan ", "Listopad", "Studeni", "Prosinac" }));
-        cmbMjeseci.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmbMjeseciKeyPressed(evt);
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Prijava", "Odjava", "Vrsta rada", "Ukupno sati rada"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
             }
         });
+        jScrollPane3.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,14 +90,15 @@ public class EvidencijaProzor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(cmbMjeseci, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(135, 135, 135)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addGap(183, 183, 183)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,46 +106,41 @@ public class EvidencijaProzor extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addGap(35, 35, 35))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(cmbMjeseci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbMjeseciKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbMjeseciKeyPressed
-       if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-           new EvidencijaZaposlenik().setVisible(true);
-        
-    }
-    }//GEN-LAST:event_cmbMjeseciKeyPressed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbMjeseci;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable2;
     private javax.swing.JList<Zaposlenik> lstZaposleniciUPoduzecu;
     // End of variables declaration//GEN-END:variables
 
     private void ucitaj() {
-       DefaultListModel<Zaposlenik> m = new DefaultListModel<>();
+        DefaultListModel<Zaposlenik> m = new DefaultListModel<>();
         List<Zaposlenik> entiteti = obrada.read();
 
         for (Zaposlenik s : entiteti) {
             m.addElement(s);
         }
-        // implementirati ćemo custom renderer https://www.codejava.net/java-se/swing/jlist-custom-renderer-example
+
         lstZaposleniciUPoduzecu.setModel(m);
+
     }
 }
