@@ -4,6 +4,7 @@
  */
 package evidencija.controller;
 
+import evidencija.model.Evidencija;
 import evidencija.model.Zaposlenik;
 import evidencija.util.EvidencijaException;
 import java.util.List;
@@ -17,6 +18,17 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
     @Override
     public List<Zaposlenik> read() {
         return session.createQuery("from Zaposlenik").list();
+    }
+    
+    public List<Evidencija> getEvidencije(Zaposlenik zaposlenik){
+        try {
+            return session.createQuery("from Evidencija where zaposlenik=:zaposlenik "
+                    + "and datumKraj is null order by datumKraj desc")
+                    .setParameter("zaposlenik", zaposlenik).list();
+           
+        } catch (Exception e) {
+            return null;
+        }
     }
     
     public Zaposlenik getZaposlenik(String brKartice){
@@ -56,8 +68,16 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
             throw new EvidencijaException("Zaposlenik se nalazi na jednom odjelu");
         }
 */
-        
     }
+
+  
+
+    
+        
+    
+
+   
+    
     
     
     
