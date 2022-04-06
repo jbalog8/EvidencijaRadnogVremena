@@ -9,7 +9,13 @@ import evidencija.model.Zaposlenik;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import us.codecraft.xsoup.Xsoup;
@@ -60,6 +66,23 @@ public class EvidencijaUtil {
         kartica = kartica.substring(kartica.length()-13);
         
         return kartica;
+    }
+    
+     public static Date generirajDatum(String beginDate, String endDate) {
+         SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MM yyy HH:mm");
+        Date d1,d2,randomDate;
+         LocalDate localDate;
+        try {
+            d1 = sdf.parse(beginDate);
+            d2 = sdf.parse(endDate);
+            randomDate = new Date(ThreadLocalRandom.current()
+                    .nextLong(d1.getTime(), d2.getTime()));
+        } catch (ParseException ex) {
+            return null;
+        }
+        localDate = randomDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        randomDate = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        return randomDate;
     }
     
 }
