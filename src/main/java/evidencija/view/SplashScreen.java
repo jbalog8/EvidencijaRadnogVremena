@@ -4,7 +4,9 @@
  */
 package evidencija.view;
 
+import evidencija.controller.ObradaZaposlenik;
 import evidencija.util.HibernateUtil;
+import evidencija.util.PocetniInesert;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 
@@ -14,7 +16,8 @@ import org.hibernate.Session;
  */
 public class SplashScreen extends javax.swing.JFrame {
 
-    private int i = 0;
+    private int a = 0;
+
     private boolean hibernateGotov;
 
     /**
@@ -27,7 +30,7 @@ public class SplashScreen extends javax.swing.JFrame {
     }
 
     private void postavke() {
-        i = 0;
+        a = 0;
         hibernateGotov = false;
         Ucitanje ucitanje = new Ucitanje();
         ucitanje.start();
@@ -38,20 +41,20 @@ public class SplashScreen extends javax.swing.JFrame {
     }
 
     private class TijekUcitanja extends Thread {
-
-        @Override
+          @Override
         public void run() {
             if (hibernateGotov) {
                 return;
             }
             try {
-                pbUcitanje.setValue(++i);
+                pbUcitanje.setValue(++a);
                 Thread.sleep(1000);
                 run();
             } catch (InterruptedException ex) {
 
             }
         }
+
 
     }
 
@@ -60,11 +63,14 @@ public class SplashScreen extends javax.swing.JFrame {
         @Override
         public void run() {
             Session s = HibernateUtil.getSession();
-            if (s.getMetamodel().getEntities().size() > 0) {
+            if(!s.getMetamodel().getEntities().isEmpty()){
+                if(new ObradaZaposlenik().read().isEmpty()){
+                    PocetniInesert.pocetniUnos();
+                }
                 hibernateGotov = true;
-                for (int t = i; t < 100; t++) {
+                for (int t = a; t < 100; t++) {
                     try {
-                        pbUcitanje.setValue(++i);
+                        pbUcitanje.setValue(++a);
                         Thread.sleep(3);
                     } catch (InterruptedException ex) {
 
