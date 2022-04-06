@@ -97,7 +97,7 @@ public class Izbornik extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem2);
 
-        jMenuItem4.setText("Zaposlenici");
+        jMenuItem4.setText("Registracija zaposlenika");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
