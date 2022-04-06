@@ -19,6 +19,24 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
     public List<Zaposlenik> read() {
         return session.createQuery("from Zaposlenik").list();
     }
+    public List<Zaposlenik> read(String uvjet) {
+        return session.createQuery("from Zaposlenik z " 
+                + "where concat(z.ime,' ', z.prezime)"
+                + "like : uvjet order by z.prezime, z.ime")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(50)
+                .list();
+    }
+    
+    public List<Zaposlenik> readPocetakPrezime(String uvjet) {
+        return session.createQuery("from Zaposlenik z " 
+                + "where concat(z.prezime)"
+                + "like : uvjet order by z.prezime, z.ime")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(50)
+                .list();
+
+    }
     
     public List<Evidencija> getEvidencije(Zaposlenik zaposlenik){
         try {
