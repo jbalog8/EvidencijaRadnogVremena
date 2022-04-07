@@ -11,6 +11,7 @@ import evidencija.model.Operater;
 import evidencija.model.VrstaRada;
 import evidencija.model.Zaposlenik;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.mindrot.jbcrypt.BCrypt;
@@ -26,15 +27,17 @@ public class PocetniInesert {
         session.beginTransaction();
         Faker faker = new Faker();
         unosOperatera();
-        List<Odjel> odjeli = new ArrayList<>(); //pitanje ne radi
-        List<VrstaRada> vrstaRada = new ArrayList<>(); //pitanje ne radi
-        List<Zaposlenik> zaposlenici = new ArrayList<>();
+
+        List<Odjel> odjeli = unosOdjela(faker, session); //pitanje ne radi
+        List<VrstaRada> vrstaRada = unesiVrstuRada(faker, session); //pitanje ne radi
 
         unosZaposlenika(odjeli, faker, session);
-        //unosOdjela(faker, session);
-        //unesiEvidenciju(zaposlenici, vrstaRada, faker, session);
-        //unesiVrstuRada(faker, session);
 
+        List<Zaposlenik> zaposlenici = new ArrayList<>();
+        unesiEvidenciju(zaposlenici, vrstaRada, faker, session);
+
+        //unosOdjela(faker, session);
+        //unesiVrstuRada(faker, session);
         session.getTransaction().commit();
 
     }
@@ -60,7 +63,7 @@ public class PocetniInesert {
         z.setBrKartice(EvidencijaUtil.generirajKarticu());
         session.save(z);
 
-        for (int i = 0; i <= 20; i++) {
+        for (int i = 0; i < 20; i++) {
             z = new Zaposlenik();
             z.setIme(faker.name().firstName());
             z.setPrezime(faker.name().lastName());
@@ -69,14 +72,15 @@ public class PocetniInesert {
                     append("fakecompay.com").toString());
             z.setOib(EvidencijaUtil.generirajOib());
             z.setBrKartice(EvidencijaUtil.generirajKarticu());
-            z.setOdjel(odjeli.get((int)(Math.random() * 10)));
+
+            z.setOdjel(odjeli.get((int) ((Math.random() * (4 - 1)) + 1)));
             session.save(z);
 
         }
 
     }
 
-    private static String[] unosOdjela(Faker faker, Session session) {
+    private static List<Odjel> unosOdjela(Faker faker, Session session) {
         List<Odjel> odjeli = new ArrayList<>();
         Odjel o;
         String[] naziv = {"Uprava", "Financije", "Nabava", "Marketing"};
@@ -88,34 +92,39 @@ public class PocetniInesert {
             odjeli.add(o);
 
         }
-        return naziv;
+        return odjeli;
     }
 
     private static void unesiEvidenciju(List<Zaposlenik> zaposlenici, List<VrstaRada> vrsteRada, Faker faker, Session session) {
         Evidencija e = new Evidencija();
-        for (int i = 0; i < 100; i++) {
-            e = new Evidencija();
+        Zaposlenik z;
+        for (int i = 0; i < zaposlenici.size(); i++) {
+            z = zaposlenici.get(i);
 
-            e.setZaposlenik(zaposlenici.get((int) (Math.random() * 10)));
-            e.setDatumPocetak(EvidencijaUtil.generirajDatum("01.01.2022", "04.04.2022"));
-            e.setDatumKraj(EvidencijaUtil.generirajDatum("01.01.2022", "04.04.2022"));
-            e.setVrstaRada(vrsteRada.get((int) (Math.random() * 10)));
-            session.save(e);
+            for (int j = 0; j < 50; i++) {
+                e = new Evidencija();
+                e.setZaposlenik(z);
+                e.setDatumPocetak(null);
+                vrsteRada = new ArrayList<>();
+                e.setVrstaRada(vrsteRada.get((int) ((Math.random() * (3 - 1)) + 1)));
+                session.save(e);
 
+            }
         }
     }
 
-    private static void unesiVrstuRada(Faker faker, Session session) {
+    private static List<VrstaRada> unesiVrstuRada(Faker faker, Session session) {
         List<VrstaRada> vrsteRada = new ArrayList<>();
         VrstaRada vR;
-        String[] naziv = {"Redovan rad", "Prekovremeni rad", "Terensi rad"};
-        for (int i = 0; i <= naziv.length; i++) {
+        String[] naziv = {"Redovan rad", "Prekovremeni rad", "Terenski rad"};
+        for (int i = 0; i < naziv.length; i++) {
             vR = new VrstaRada();
             vR.setNaziv(naziv[i]);
 
             session.save(vR);
             vrsteRada.add(vR);
         }
+        return vrsteRada;
     }
 
 }
