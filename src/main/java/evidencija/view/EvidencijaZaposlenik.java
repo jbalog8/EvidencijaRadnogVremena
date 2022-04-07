@@ -6,9 +6,18 @@ package evidencija.view;
 
 import evidencija.controller.ObradaEvidencija;
 import evidencija.controller.ObradaZaposlenik;
+import evidencija.model.Zaposlenik;
 import evidencija.util.EvidencijaUtil;
+import java.awt.event.KeyEvent;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.DefaultListModel;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -16,16 +25,52 @@ import javax.swing.table.TableModel;
  */
 public class EvidencijaZaposlenik extends javax.swing.JFrame {
 
-    private ObradaZaposlenik obrada;
-    /**
+    private ObradaEvidencija obrada;
+    private ObradaZaposlenik obradaZ;
+    DefaultTableModel ms;
+    private TableRowSorter sorter;
+
+    /*
      * Creates new form EvidencijaZaposlenik
      */
     public EvidencijaZaposlenik() {
         initComponents();
-        setTitle(EvidencijaUtil.getNaslov("Evidencija Zaposlenih za mjesec: "+ " " +"/2022")); //nadodati jos koji je mjesec odabran
-        obrada = new ObradaZaposlenik();
-        
-       
+        setTitle(EvidencijaUtil.getNaslov("Evidencija Zaposlenika")); //nadodati jos koji je mjesec odabran
+        obrada = new ObradaEvidencija();
+        ms = new DefaultTableModel();
+        obradaZ = new ObradaZaposlenik();
+        sorter = new TableRowSorter<>(ms);
+        tblEvidencija.setRowSorter(sorter);
+        //ucitajTablicu();
+
+        lstZaposleniciUPoduzecu.setCellRenderer(new PrikazOsoba());
+
+        txtTrazi.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search(txtTrazi.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(txtTrazi.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(txtTrazi.getText());
+            }
+
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter(str));
+                }
+            }
+        });
+
     }
 
     /**
@@ -37,80 +82,217 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstZaposleniciUPoduzecu = new javax.swing.JList<>();
+        jPanel5 = new javax.swing.JPanel();
+        btnTrazi = new javax.swing.JButton();
+        chbPocetakPrezimena = new javax.swing.JCheckBox();
+        txtTrazi = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtEvidencijaZaposlenik = new javax.swing.JTable();
+        tblEvidencija = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Evidencija zaposlenika");
+        lstZaposleniciUPoduzecu.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstZaposleniciUPoduzecuValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(lstZaposleniciUPoduzecu);
 
-        jtEvidencijaZaposlenik.setModel(new javax.swing.table.DefaultTableModel(
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+
+        btnTrazi.setText("Trazi");
+        btnTrazi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTraziActionPerformed(evt);
+            }
+        });
+
+        txtTrazi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTraziActionPerformed(evt);
+            }
+        });
+        txtTrazi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTraziKeyPressed(evt);
+            }
+        });
+
+        jLabel10.setText("Trazi zaposlenika po imenu, prezimenu");
+
+        jLabel9.setText("Početak prezimena");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(chbPocetakPrezimena)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(txtTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTrazi)))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel10)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTrazi))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(chbPocetakPrezimena)
+                    .addComponent(jLabel9))
+                .addContainerGap())
+        );
+
+        tblEvidencija.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Zaposlenik", "Datum početka", "Datum kraja", "Vrsta rada", "Provedeno vrijeme", "Ukuno sati"
+                "Prijava", "Odjava", "Vrsta rada", "Ukupno rada"
             }
         ));
-        jScrollPane1.setViewportView(jtEvidencijaZaposlenik);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(180, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(178, 178, 178))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jScrollPane1.setViewportView(tblEvidencija);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 513, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(72, 72, 72))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraziActionPerformed
+        ucitaj();
+    }//GEN-LAST:event_btnTraziActionPerformed
+
+    private void txtTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTraziActionPerformed
+        ucitaj();
+    }//GEN-LAST:event_txtTraziActionPerformed
+
+    private void txtTraziKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTraziKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ucitaj();
+        }
+    }//GEN-LAST:event_txtTraziKeyPressed
+
+    private void lstZaposleniciUPoduzecuValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstZaposleniciUPoduzecuValueChanged
+        if (evt.getValueIsAdjusting() || lstZaposleniciUPoduzecu.getSelectedValue() == null) {
+            return;
+        }
+        obradaZ.setEntitet(lstZaposleniciUPoduzecu.getSelectedValue());
+        ucitajTablicu();
+         tblEvidencija.setModel(ms);
+
+
+    }//GEN-LAST:event_lstZaposleniciUPoduzecuValueChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnTrazi;
+    private javax.swing.JCheckBox chbPocetakPrezimena;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtEvidencijaZaposlenik;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<Zaposlenik> lstZaposleniciUPoduzecu;
+    private javax.swing.JTable tblEvidencija;
+    private javax.swing.JTextField txtTrazi;
     // End of variables declaration//GEN-END:variables
 
-    
+    private void ucitaj() {
+        DefaultListModel<Zaposlenik> m = new DefaultListModel<>();
+        List<Zaposlenik> entiteti = obradaZ.read();
+
+        if (chbPocetakPrezimena.isSelected()) {
+            entiteti = obradaZ.readPocetakPrezime(txtTrazi.getText().trim());
+        } else {
+            entiteti = obradaZ.read(txtTrazi.getText().trim());
+        }
+
+        Collections.sort(entiteti, new ZaposlenikComparator());
+
+        lstZaposleniciUPoduzecu.setModel(m);
+
+        for (Zaposlenik o : entiteti) {
+            m.addElement(o);
+        }
+
+    }
+
+    private void ucitajTablicu() {
+
+        ms = new DefaultTableModel();
+        obrada = new ObradaEvidencija();
+        ms.addColumn("Prijava");
+        ms.addColumn("Odjava");
+        ms.addColumn("Vrsta rada");
+        ms.addColumn("Ukupno rada");
+
+        new ObradaEvidencija().read().forEach(e ->{
+            Vector vec = new Vector();
+            vec.add(e.getDatumPocetak());
+            vec.add(e.getDatumKraj());
+            vec.add(e.getVrstaRada());
+            vec.add(e.getDatumKraj().getTime() - e.getDatumPocetak().getTime());
+            ms.addRow(vec);
+            });
+        tblEvidencija.setModel(ms);
+    }
 }
