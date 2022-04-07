@@ -5,17 +5,10 @@
 package evidencija.util;
 
 import evidencija.model.Operater;
-import evidencija.model.Zaposlenik;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Calendar;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import us.codecraft.xsoup.Xsoup;
@@ -25,15 +18,16 @@ import us.codecraft.xsoup.Xsoup;
  * @author jbalog8
  */
 public class EvidencijaUtil {
+
     public static Operater operater;
-    public static final String NAZIV_APP="EVIDENCIJA app";
-    
-    public static String getNaslov(String naslov){
-        if(EvidencijaUtil.operater==null){
+    public static final String NAZIV_APP = "EVIDENCIJA app";
+
+    public static String getNaslov(String naslov) {
+        if (EvidencijaUtil.operater == null) {
             return EvidencijaUtil.NAZIV_APP + " " + naslov;
         }
-        return EvidencijaUtil.NAZIV_APP + " " + naslov +" " + EvidencijaUtil.operater.getIme() + " " + 
-                EvidencijaUtil.operater.getPrezime() + " - " + EvidencijaUtil.operater.getUloga();
+        return EvidencijaUtil.NAZIV_APP + " " + naslov + " " + EvidencijaUtil.operater.getIme() + " "
+                + EvidencijaUtil.operater.getPrezime() + " - " + EvidencijaUtil.operater.getUloga();
     }
 
     public static String generirajOib() {
@@ -57,32 +51,17 @@ public class EvidencijaUtil {
         }
         return "";
     }
-    
-    public static String generirajKarticu(){
-       int broj = ((int)(Math.random()*100)+1);
-       String kartica = "";
-       
+
+    public static String generirajKarticu() {
+        int broj = ((int) (Math.random() * 100) + 1);
+        String kartica = "";
+
         kartica = "1000000000000" + broj;
-        kartica = kartica.substring(kartica.length()-13);
-        
+        kartica = kartica.substring(kartica.length() - 13);
+
         return kartica;
     }
+
     
-     public static Date generirajDatum(String beginDate, String endDate) {
-         SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MM yyy HH:mm");
-        Date d1,d2,randomDate;
-         LocalDate localDate;
-        try {
-            d1 = sdf.parse(beginDate);
-            d2 = sdf.parse(endDate);
-            randomDate = new Date(ThreadLocalRandom.current()
-                    .nextLong(d1.getTime(), d2.getTime()));
-        } catch (ParseException ex) {
-            return null;
-        }
-        localDate = randomDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        randomDate = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        return randomDate;
-    }
-    
+
 }
