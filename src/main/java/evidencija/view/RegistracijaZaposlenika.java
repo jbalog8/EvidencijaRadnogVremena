@@ -523,6 +523,12 @@ public class RegistracijaZaposlenika extends javax.swing.JFrame {
         } catch (EvidencijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
         }
+        
+        
+           
+        
+        
+        
     }//GEN-LAST:event_btnObrisiActionPerformed
 
     private void btnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraziActionPerformed
