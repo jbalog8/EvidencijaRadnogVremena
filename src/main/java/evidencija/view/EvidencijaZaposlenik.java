@@ -6,18 +6,16 @@ package evidencija.view;
 
 import evidencija.controller.ObradaEvidencija;
 import evidencija.controller.ObradaZaposlenik;
+import evidencija.model.Evidencija;
 import evidencija.model.Zaposlenik;
 import evidencija.util.EvidencijaUtil;
 import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.DefaultListModel;
-import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -27,8 +25,8 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
 
     private ObradaEvidencija obrada;
     private ObradaZaposlenik obradaZ;
-    DefaultTableModel ms;
-    private TableRowSorter sorter;
+    //DefaultTableModel ms;
+    //private TableRowSorter sorter;
 
     /*
      * Creates new form EvidencijaZaposlenik
@@ -37,38 +35,32 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
         initComponents();
         setTitle(EvidencijaUtil.getNaslov("Evidencija Zaposlenika")); //nadodati jos koji je mjesec odabran
         obrada = new ObradaEvidencija();
-        ms = new DefaultTableModel();
+        //ms = new DefaultTableModel();
         obradaZ = new ObradaZaposlenik();
-        sorter = new TableRowSorter<>(ms);
-        tblEvidencija.setRowSorter(sorter);
+        //sorter = new TableRowSorter<>(ms);
+        TablicaModel m = new TablicaModel(new ObradaEvidencija().read());
+        jtEvidencija.setModel(m);
         //ucitajTablicu();
-
         lstZaposleniciUPoduzecu.setCellRenderer(new PrikazOsoba());
 
         txtTrazi.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                search(txtTrazi.getText());
+                ucitajTablicu();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                search(txtTrazi.getText());
+                ucitajTablicu();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                search(txtTrazi.getText());
+                ucitajTablicu();
             }
 
-            public void search(String str) {
-                if (str.length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter(str));
-                }
-            }
+            
         });
 
     }
@@ -82,40 +74,35 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstZaposleniciUPoduzecu = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtEvidencija = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnTrazi = new javax.swing.JButton();
         chbPocetakPrezimena = new javax.swing.JCheckBox();
         txtTrazi = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblEvidencija = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstZaposleniciUPoduzecu = new javax.swing.JList<>();
+        btnPogledajEvidenciju = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lstZaposleniciUPoduzecu.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstZaposleniciUPoduzecuValueChanged(evt);
+        jtEvidencija.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Prijava", "Odjava", "Vrsta Rada", "Ukupan rad"
             }
-        });
-        jScrollPane2.setViewportView(lstZaposleniciUPoduzecu);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-        );
+        ));
+        jScrollPane3.setViewportView(jtEvidencija);
 
         btnTrazi.setText("Trazi");
         btnTrazi.addActionListener(new java.awt.event.ActionListener() {
@@ -172,18 +159,62 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tblEvidencija.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Prijava", "Odjava", "Vrsta rada", "Ukupno rada"
+        lstZaposleniciUPoduzecu.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstZaposleniciUPoduzecuValueChanged(evt);
             }
-        ));
-        jScrollPane1.setViewportView(tblEvidencija);
+        });
+        jScrollPane2.setViewportView(lstZaposleniciUPoduzecu);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+        );
+
+        btnPogledajEvidenciju.setText("Pogledaj Evidenciju");
+        btnPogledajEvidenciju.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPogledajEvidencijuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnPogledajEvidenciju, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnPogledajEvidenciju)
+                .addContainerGap())
+        );
+
+        jLabel1.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jLabel1.setText("Evidencija Zaposlenika");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,26 +222,29 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(72, 72, 72))
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel1)
+                        .addGap(34, 34, 34)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -236,23 +270,40 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
             return;
         }
         obradaZ.setEntitet(lstZaposleniciUPoduzecu.getSelectedValue());
-        ucitajTablicu();
-         tblEvidencija.setModel(ms);
 
 
     }//GEN-LAST:event_lstZaposleniciUPoduzecuValueChanged
 
+    private void btnPogledajEvidencijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPogledajEvidencijuActionPerformed
+
+//        Vector vec = new Vector();
+//
+//        obrada.getZaposlenik(txtTrazi.getText());
+//        vec.add(obrada.getEntitet().getDatumPocetak());
+//        vec.add(obrada.getEntitet().getDatumKraj());
+//        vec.add(obrada.getEntitet().getVrstaRada());
+//        vec.add(obrada.getEntitet().getDatumKraj().getTime()
+//                - obrada.getEntitet().getDatumPocetak().getTime());
+//
+//        ms.addRow(vec);
+        ucitajTablicu();
+        //jtEvidencija.setModel(ms);
+    }//GEN-LAST:event_btnPogledajEvidencijuActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPogledajEvidenciju;
     private javax.swing.JButton btnTrazi;
     private javax.swing.JCheckBox chbPocetakPrezimena;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jtEvidencija;
     private javax.swing.JList<Zaposlenik> lstZaposleniciUPoduzecu;
-    private javax.swing.JTable tblEvidencija;
     private javax.swing.JTextField txtTrazi;
     // End of variables declaration//GEN-END:variables
 
@@ -277,22 +328,36 @@ public class EvidencijaZaposlenik extends javax.swing.JFrame {
     }
 
     private void ucitajTablicu() {
-
-        ms = new DefaultTableModel();
-        obrada = new ObradaEvidencija();
-        ms.addColumn("Prijava");
-        ms.addColumn("Odjava");
-        ms.addColumn("Vrsta rada");
-        ms.addColumn("Ukupno rada");
-
-        new ObradaEvidencija().read().forEach(e ->{
-            Vector vec = new Vector();
-            vec.add(e.getDatumPocetak());
-            vec.add(e.getDatumKraj());
-            vec.add(e.getVrstaRada());
-            vec.add(e.getDatumKraj().getTime() - e.getDatumPocetak().getTime());
-            ms.addRow(vec);
-            });
-        tblEvidencija.setModel(ms);
-    }
+       // Evidencija e = obrada.getEvidencija(lstZaposleniciUPoduzecu.getSelectedValue().toString());
+        Runnable doHighlight = new Runnable() {
+        @Override
+        public void run() {
+          txtTrazi.setText("");
+           
+           
+     }
+        };
+         SwingUtilities.invokeLater(doHighlight);
+                }
 }
+        
+
+//        ms = new DefaultTableModel();
+//        obrada = new ObradaEvidencija();
+//        ms.addColumn("Prijava");
+//        ms.addColumn("Odjava");
+//        ms.addColumn("Vrsta rada");
+//        ms.addColumn("Ukupno rada");
+//        jtEvidencija.setModel(ms);
+//
+//        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+//        rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+//
+//    }
+//
+//    public Object GetData(JTable table, int row_index, int col_index) {
+//        return table.getModel().getValueAt(row_index, col_index);
+//    }
+    
+     
+
