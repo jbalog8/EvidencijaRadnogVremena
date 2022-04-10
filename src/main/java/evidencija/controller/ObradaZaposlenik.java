@@ -78,15 +78,7 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
         }
     }
 
-    @Override
-    protected void kontrolaDelete() throws EvidencijaException {
-        super.kontrolaDelete();
-        /*
-        if(entitet.getOdjel()!= null){
-            throw new EvidencijaException("Zaposlenik se nalazi na jednom odjelu");
-        }
-*/
-    }
+    
 
   
 
