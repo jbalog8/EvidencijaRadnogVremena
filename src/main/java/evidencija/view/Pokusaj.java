@@ -38,6 +38,7 @@ public class Pokusaj extends javax.swing.JFrame {
         z = new ObradaZaposlenik();
         postavke();
         setTitle(EvidencijaUtil.getNaslov("Evidencija zaposlenika"));
+        sirinaStupca();
 
     }
 
@@ -344,5 +345,12 @@ public class Pokusaj extends javax.swing.JFrame {
             m.addElement(o);
         }
 
+    }
+    
+    private void sirinaStupca() {
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(90);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(90);
+         jTable1.getColumnModel().getColumn(2).setPreferredWidth(30);
+        jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_LAST_COLUMN);
     }
 }
