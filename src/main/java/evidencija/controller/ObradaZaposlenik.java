@@ -28,6 +28,8 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
                 .list();
     }
     
+    
+    
     public List<Zaposlenik> readPocetakPrezime(String uvjet) {
         return session.createQuery("from Zaposlenik z " 
                 + "where concat(z.prezime)"
@@ -75,6 +77,23 @@ public class ObradaZaposlenik extends ObradaOsoba<Zaposlenik>{
         
         if(lista!= null && lista.size()>0){
             throw new EvidencijaException("Broj kartice je već u sustavu, dodjeljen " + lista.get(0).getPrezime());
+        }
+    }
+    
+    protected void kontrolaUpdate() throws EvidencijaException{
+        super.kontrolaUpdate();
+        List<Zaposlenik> lista = session.createQuery("from Zaposlenik z " + "where z.aktivan=:aktivan").
+                setParameter("aktivan", entitet.getAktivan()).list();
+        
+    }
+    
+     public Zaposlenik getZaposlenik(Boolean aktivan){
+        try {
+            return (Zaposlenik) session.createQuery("from Zaposlenik where aktivan=:aktivan")
+                    .setParameter("aktivan", aktivan).getSingleResult();
+            
+        } catch (Exception e) {
+            return null;
         }
     }
 
