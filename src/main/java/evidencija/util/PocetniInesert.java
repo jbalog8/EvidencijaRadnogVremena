@@ -64,6 +64,7 @@ public class PocetniInesert {
         z.setOdjel((odjeli.get(0)));
         z.setOib(EvidencijaUtil.generirajOib());
         z.setBrKartice(EvidencijaUtil.generirajKarticu());
+        z.setAktivan(true);
         session.save(z);
         zaposlenici.add((z));
 
@@ -78,6 +79,7 @@ public class PocetniInesert {
             z.setBrKartice(EvidencijaUtil.generirajKarticu());
 
             z.setOdjel(odjeli.get((int) ((Math.random() * (4 - 1)) + 1)));
+            z.setAktivan(true);
             session.save(z);
             zaposlenici.add((z)); 
         }
@@ -112,8 +114,8 @@ public class PocetniInesert {
                 e.setZaposlenik(z);
                 Calendar c = Calendar.getInstance();
                 c.set(Calendar.MONTH, 0); // mjeseci kreću od nule
-                c.set(Calendar.MONTH, 1);
-                c.set(Calendar.MONTH, 2);
+//                c.set(Calendar.MONTH, 1);
+//                c.set(Calendar.MONTH, 2);
                 c.set(Calendar.DAY_OF_MONTH, slucajniBroj(27, 1));
                 c.set(Calendar.YEAR, 2022);
                 c.set(Calendar.HOUR_OF_DAY, slucajniBroj(9, 7));
