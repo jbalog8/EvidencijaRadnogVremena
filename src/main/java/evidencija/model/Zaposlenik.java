@@ -17,6 +17,16 @@ public class Zaposlenik extends Osoba {
     private String brKartice;
     @ManyToOne
     private Odjel odjel;
+    
+    private Boolean aktivan;
+
+    public Boolean getAktivan() {
+        return aktivan;
+    }
+
+    public void setAktivan(Boolean aktivan) {
+        this.aktivan = aktivan;
+    }
 
     public String getBrKartice() {
         return brKartice;
