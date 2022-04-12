@@ -65,7 +65,7 @@
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnPogledajEvidenciju" min="-2" pref="176" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnOcistiEvidenciju" min="-2" pref="176" max="-2" attributes="0"/>
+                          <Component id="btnObrisiEvidenciju" min="-2" pref="176" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -95,7 +95,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnPogledajEvidenciju" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnOcistiEvidenciju" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnObrisiEvidenciju" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -283,12 +283,12 @@
             <Property name="text" type="java.lang.String" value="Evidencija Zaposlenika"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnOcistiEvidenciju">
+        <Component class="javax.swing.JButton" name="btnObrisiEvidenciju">
           <Properties>
-            <Property name="text" type="java.lang.String" value="O&#x10d;isti Evidenciju"/>
+            <Property name="text" type="java.lang.String" value="Obri&#x161;i Evidenciju"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOcistiEvidencijuActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObrisiEvidencijuActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

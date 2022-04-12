@@ -10,12 +10,16 @@ import evidencija.model.Evidencija;
 import evidencija.model.Odjel;
 import evidencija.model.VrstaRada;
 import evidencija.model.Zaposlenik;
+import evidencija.util.EvidencijaException;
 import evidencija.util.EvidencijaUtil;
 import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -65,7 +69,7 @@ public class Pokusaj extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btnOcistiEvidenciju = new javax.swing.JButton();
+        btnObrisiEvidenciju = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -174,10 +178,10 @@ public class Pokusaj extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Evidencija Zaposlenika");
 
-        btnOcistiEvidenciju.setText("Očisti Evidenciju");
-        btnOcistiEvidenciju.addActionListener(new java.awt.event.ActionListener() {
+        btnObrisiEvidenciju.setText("Obriši Evidenciju");
+        btnObrisiEvidenciju.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOcistiEvidencijuActionPerformed(evt);
+                btnObrisiEvidencijuActionPerformed(evt);
             }
         });
 
@@ -202,7 +206,7 @@ public class Pokusaj extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addComponent(btnPogledajEvidenciju, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnOcistiEvidenciju, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnObrisiEvidenciju, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +227,7 @@ public class Pokusaj extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPogledajEvidenciju)
-                    .addComponent(btnOcistiEvidenciju))
+                    .addComponent(btnObrisiEvidenciju))
                 .addContainerGap())
         );
 
@@ -267,7 +271,8 @@ public class Pokusaj extends javax.swing.JFrame {
             return;
         }
         z.setEntitet(lstZaposleniciUPoduzecu.getSelectedValue());
-
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        dtm.setRowCount(0);
 
     }//GEN-LAST:event_lstZaposleniciUPoduzecuValueChanged
 
@@ -277,14 +282,13 @@ public class Pokusaj extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnPogledajEvidencijuActionPerformed
 
-    private void btnOcistiEvidencijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOcistiEvidencijuActionPerformed
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-        dtm.setRowCount(0);
-    }//GEN-LAST:event_btnOcistiEvidencijuActionPerformed
+    private void btnObrisiEvidencijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiEvidencijuActionPerformed
+       
+    }//GEN-LAST:event_btnObrisiEvidencijuActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnOcistiEvidenciju;
+    private javax.swing.JButton btnObrisiEvidenciju;
     private javax.swing.JButton btnPogledajEvidenciju;
     private javax.swing.JButton btnTrazi;
     private javax.swing.JCheckBox chbPocetakPrezimena;
@@ -346,11 +350,11 @@ public class Pokusaj extends javax.swing.JFrame {
         }
 
     }
-    
+
     private void sirinaStupca() {
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(90);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(90);
-         jTable1.getColumnModel().getColumn(2).setPreferredWidth(30);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(30);
         jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_LAST_COLUMN);
     }
 }
