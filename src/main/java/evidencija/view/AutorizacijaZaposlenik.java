@@ -61,8 +61,13 @@ public class AutorizacijaZaposlenik extends javax.swing.JFrame {
             return;
         }
          Zaposlenik zaposlenik = obrada.getZaposlenik(txtBrojKartice.getText());
+         
         if(zaposlenik==null){
-            JOptionPane.showMessageDialog(null, "Ne postoji zaposlenik");
+            JOptionPane.showMessageDialog(null, "Ne postoji zaposlenik/ca");
+            return;
+        }
+        if(zaposlenik.getAktivan() == false){
+            JOptionPane.showMessageDialog(null, "Niste više aktivni zaposlenik/ca poduzeća");
             return;
         }
        
@@ -93,7 +98,7 @@ public class AutorizacijaZaposlenik extends javax.swing.JFrame {
             try {
                
                 obradaEvidencija.update();
-                JOptionPane.showMessageDialog(null, "Uspješno stese odjavili " + evidencija.getZaposlenik());
+                JOptionPane.showMessageDialog(null, "Uspješno ste se odjavili " + evidencija.getZaposlenik());
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "nije dobro");
                 return;
