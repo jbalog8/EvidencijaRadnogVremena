@@ -126,7 +126,9 @@ public class PocetniInesert {
                 e.setDatumPocetak(c.getTime());
                 c.add(Calendar.MINUTE, slucajniBroj((8 * 60) + 10, (7 * 60) + 50));
                 e.setDatumKraj(c.getTime());
-                e.setVrstaRada(vrsteRada.get((int) ((Math.random() * (3 - 1)) + 1)));
+                
+                e.setVrstaRada(vrsteRada.get((int)(Math.random() * vrsteRada.size())));
+                              
                 session.save(e);
 
 
@@ -164,8 +166,8 @@ public class PocetniInesert {
     private static List<VrstaRada> unesiVrstuRada(Faker faker, Session session) {
         List<VrstaRada> vrsteRada = new ArrayList<>();
         VrstaRada vR;
-        String[] naziv = {"Redovan rad", "Prekovremeni rad", "Terenski rad"};
-        for (int i = 0; i < naziv.length; i++) {
+        String[] naziv = {"Redovan rad","Prekovremeni rad", "Rad od kuće", "Terenski rad"};
+        for (int i = 0; i < naziv.length; ++i) {
             vR = new VrstaRada();
             vR.setNaziv(naziv[i]);
 
