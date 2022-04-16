@@ -114,6 +114,7 @@ public class PocetniInesert {
                 e.setZaposlenik(z);
                 Calendar c = Calendar.getInstance();
                 c.set(Calendar.MONTH, 0); // mjeseci kreću od nule
+                
 //                c.set(Calendar.MONTH, 1);
 //                c.set(Calendar.MONTH, 2);
                 c.set(Calendar.DAY_OF_MONTH, slucajniBroj(27, 1));
@@ -128,9 +129,11 @@ public class PocetniInesert {
                 e.setVrstaRada(vrsteRada.get((int) ((Math.random() * (3 - 1)) + 1)));
                 session.save(e);
 
+
             }
         }
     }
+    
 
     /*
     private static void radSDatumima(){
