@@ -10,12 +10,9 @@ import evidencija.model.Odjel;
 import evidencija.model.Zaposlenik;
 import evidencija.util.EvidencijaException;
 import evidencija.util.EvidencijaUtil;
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -506,7 +503,6 @@ public class RegistracijaZaposlenika extends javax.swing.JFrame {
     }//GEN-LAST:event_lstEntitetiValueChanged
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-
         if (obrada.getEntitet() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
@@ -527,17 +523,16 @@ public class RegistracijaZaposlenika extends javax.swing.JFrame {
             obrada.update();
             var o = obrada.getEntitet();
             o.setAktivan(false);
-           
 
             JOptionPane.showMessageDialog(rootPane, "Zaposlenik: " + " " + obrada.getEntitet().getIme().substring(0, 1) + "."
                     + obrada.getEntitet().getPrezime() + " " + " više nije aktivan zaposlenik/ca poduzeća");
 
         } catch (EvidencijaException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getPoruka());
-
         }
 
         ucitaj();
+
 
     }//GEN-LAST:event_btnObrisiActionPerformed
 
@@ -631,10 +626,9 @@ public class RegistracijaZaposlenika extends javax.swing.JFrame {
             m.addElement(o);
             if (o.getAktivan() == false) {
                 m.removeElement(o);
-                    
+
             }
             lstEntiteti.setModel(m);
-            
         }
         lstEntiteti.setModel(m);
     }
