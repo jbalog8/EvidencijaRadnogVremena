@@ -6,6 +6,7 @@ package evidencija.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.swing.text.StyledEditorKit;
 
 /**
  *
@@ -17,16 +18,7 @@ public class Zaposlenik extends Osoba {
     private String brKartice;
     @ManyToOne
     private Odjel odjel;
-    
     private Boolean aktivan;
-
-    public Boolean getAktivan() {
-        return aktivan;
-    }
-
-    public void setAktivan(Boolean aktivan) {
-        this.aktivan = aktivan;
-    }
 
     public String getBrKartice() {
         return brKartice;
@@ -43,5 +35,15 @@ public class Zaposlenik extends Osoba {
     public void setOdjel(Odjel odjel) {
         this.odjel = odjel;
     }
+
+    public Boolean getAktivan() {
+        return aktivan;
+    }
+
+    public void setAktivan(Boolean aktivan) {
+        this.aktivan = aktivan;
+    }
+    
+    
 
 }

@@ -16,7 +16,16 @@ public class ObradaVrstaRada extends Obrada<VrstaRada> {
 
     @Override
     public List<VrstaRada> read() {
-        return session.createQuery("from VrstaRada a order by a.naziv").list();
+        return session.createQuery("from VrstaRada a order by a.nazivRada").list();
+    }
+    
+    public List<VrstaRada> read(String uvjet) {
+        return session.createQuery("from VrstaRada vR "
+                + " where concat(vR.nazivRada) "
+                + " like :uvjet order by vR.nazivRada")
+                .setParameter("uvjet","%" + uvjet + "%")
+                .setMaxResults(50)
+                .list();
     }
 
     @Override
