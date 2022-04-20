@@ -56,18 +56,16 @@
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" pref="240" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="btnPogledajEvidenciju" min="-2" pref="176" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="240" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnPogledajEvidenciju" min="-2" pref="176" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnOcistiEvidenciju" min="-2" pref="176" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -95,7 +93,10 @@
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnPogledajEvidenciju" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnPogledajEvidenciju" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnOcistiEvidenciju" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -239,7 +240,7 @@
                     <Column editable="false" title="Prijava" type="java.lang.Object"/>
                     <Column editable="false" title="Odjava" type="java.lang.Object"/>
                     <Column editable="false" title="Ukupno rada" type="java.lang.Object"/>
-                    <Column editable="false" title="Vrsta rada" type="java.lang.Object"/>
+                    <Column editable="true" title="Vrsta rada" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -281,6 +282,14 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Evidencija Zaposlenika"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnOcistiEvidenciju">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="O&#x10d;isti Evidenciju"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOcistiEvidencijuActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
